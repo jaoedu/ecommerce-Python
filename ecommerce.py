@@ -1,3 +1,4 @@
+import getpass
 import sqlite3
 import time
 import os
@@ -18,7 +19,7 @@ class Ecommerce:
         if email_cliente is None:
             email_cliente = input("Digite seu email: ")
         if senha_cliente is None:
-            senha_cliente = input("Digite sua senha: ")
+            senha_cliente = getpass.getpass("Digite sua senha: ")
 
         try:
             db.cursor.execute(
@@ -42,7 +43,7 @@ class Ecommerce:
         if email_funcionario is None:
             email_funcionario = input("Digite seu email: ")
         if senha_funcionario is None:
-            senha_funcionario = input("Digite sua senha: ")
+            senha_funcionario = getpass("Digite sua senha: ")
 
         try:
             db.cursor.execute(
@@ -140,7 +141,7 @@ class Ecommerce:
         novo_email = input(
             "Digite o novo email (ou pressione Enter para manter o atual): "
         )
-        nova_senha = input(
+        nova_senha = getpass.getpass(
             "Digite a nova senha (ou pressione Enter para manter a atual): "
         )
 
@@ -279,7 +280,7 @@ class Ecommerce:
     def cadastrar_cliente(self):
         nome = input("Digite seu nome: ")
         email = input("Digite seu email: ")
-        senha = input("Digite sua senha: ")
+        senha = getpass.getpass("Digite sua senha: ")
 
         db.cursor.execute(
             "INSERT INTO clientes (nome, email, senha, tipo) VALUES (?, ?, ?, ?)",
@@ -292,7 +293,7 @@ class Ecommerce:
     def cadastrar_funcionario(self):
         nome = input("Digite seu nome: ")
         email = input("Digite seu email: ")
-        senha = input("Digite sua senha: ")
+        senha = getpass.getpass("Digite sua senha: ")
 
         try:
             db.cursor.execute(
@@ -313,7 +314,7 @@ if __name__ == "__main__":
     ecommerce.main_ecommerce()
 
     email = input("Digite seu email: ")
-    senha = input("Digite sua senha: ")
+    senha = getpass.getpass("Digite sua senha: ")
 
     if ecommerce.fazer_login_cliente(email, senha):
         ecommerce.main_ecommerce_cliente()
