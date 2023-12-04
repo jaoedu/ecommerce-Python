@@ -43,7 +43,7 @@ class Ecommerce:
         if email_funcionario is None:
             email_funcionario = input("Digite seu email: ")
         if senha_funcionario is None:
-            senha_funcionario = getpass("Digite sua senha: ")
+            senha_funcionario = getpass.getpass("Digite sua senha: ")
 
         try:
             db.cursor.execute(
