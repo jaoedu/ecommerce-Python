@@ -32,7 +32,7 @@ class Funcionario:
             print(f"Erro ao fazer login: {e}")
             return False
 
-    def alterar_informacoes(self, novo_nome, novo_email, nova_senha):
+    def alterar_informacoes_funcionario(self, novo_nome, novo_email, nova_senha):
         self.nome = novo_nome
         self.email = novo_email
         self.senha = nova_senha

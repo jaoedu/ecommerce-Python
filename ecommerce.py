@@ -55,9 +55,10 @@ class Ecommerce:
             if funcionario_data:
                 id_funcionario, nome, email, senha = funcionario_data
                 self.funcionario = Funcionario(id_funcionario, nome, email, senha)
+                print("Acesso Permitido")
                 return True
             else:
-                print("Credenciais inválidas.")
+                print("Credenciais invalidas.")
                 return False
         except sqlite3.Error as e:
             print(f"Erro ao fazer login: {e}")
@@ -187,6 +188,15 @@ class Ecommerce:
             print("Exclusão de conta cancelada.")
             return False
 
+    def exibir_carrinho(self):
+        if not self.carrinho.items:
+            print("Seu carrinho está vazio.")
+        else:
+            print("Seu carrinho:")
+            for i, produto in enumerate(self.carrinho.items, start=1):
+                print(f"{i}. {produto}")
+            print(f"Total: R${self.carrinho.calcular_total()}")
+
     def main_ecommerce_cliente(self):
         while True:
             time.sleep(2)
@@ -200,7 +210,8 @@ class Ecommerce:
                 "4": self.finalizar_compra,
                 "5": self.alterar_informacoes_cadastro_cliente,
                 "6": self.deletar_conta_como_cliente,
-                "7": lambda: None,  # Sair
+                "7": self.exibir_carrinho,  # Adicionando a opção para exibir o carrinho
+                "8": lambda: None,  # Sair
             }
 
             print("1. Exibir produtos")
@@ -209,13 +220,14 @@ class Ecommerce:
             print("4. Finalizar compra")
             print("5. Alterar informações de cadastro")
             print("6. Deletar conta")
-            print("7. Sair")
+            print("7. Exibir carrinho")
+            print("8. Sair")
 
             escolha = input("Escolha uma opção: ")
 
             if escolha in opcoes:
                 opcoes[escolha]()
-                if escolha == "7":
+                if escolha == "8":
                     print("Redirecionando para o menu principal...")
                     break  # corrigindo aqui para sair do loop
             else:
@@ -228,8 +240,13 @@ class Ecommerce:
             print(f"Bem-vindo, {self.funcionario.nome}!")
 
             opcoes = {
-                "1": self.funcionario.cadastrar_produto,
-                "2": self.alterar_informacoes_cadastro_cliente,
+                "1": (
+                    self.funcionario.cadastrar_produto,
+                    "Digite o nome do produto: ",
+                    "Digite a descrição do produto: ",
+                    "Digite o preço do produto: ",
+                ),
+                "2": self.funcionario.alterar_informacoes_funcionario,
                 "3": self.funcionario.deletar_conta_cliente,
                 "4": lambda: None,  # Sair
             }
@@ -242,7 +259,15 @@ class Ecommerce:
             escolha = input("Escolha uma opção: ")
 
             if escolha in opcoes:
-                opcoes[escolha]()
+                if escolha == "1":
+                    # Se a escolha for cadastrar_produto, solicite os detalhes do produto
+                    args = [input(msg) for msg in opcoes[escolha][1:]]
+                    # Chama a função com os detalhes do produto como argumentos
+                    opcoes[escolha][0](*args)
+                else:
+                    # Se não for a opção de cadastrar_produto, chama a função sem argumentos
+                    opcoes[escolha]()
+
                 if escolha == "4":
                     print("Redirecionando para o menu principal...")
                     break  # corrigindo aqui para sair do loop
