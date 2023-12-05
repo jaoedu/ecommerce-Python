@@ -12,13 +12,13 @@ Visualizar produtos disponíveis.
 Adicionar produtos ao carrinho.
 Remover produtos do carrinho.
 Finalizar uma compra.
+excluir sua conta do sistema.
 Operações do Funcionário:
 
 Cadastrar novos produtos.
 Deletar contas de clientes.
-Requisitos
-Python 3.x
-Bibliotecas: sqlite3 e getpass
+
+Bibliotecas: sqlite3 , getpass, os e time
 
 
 
